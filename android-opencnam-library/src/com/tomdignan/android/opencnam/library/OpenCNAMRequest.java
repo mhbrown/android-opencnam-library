@@ -45,16 +45,16 @@ abstract public class OpenCNAMRequest implements Request {
 	private static final String TAG = "OpenCNAMRequest";
 	
 	/** Base URL for request. MUST include trailing slash. */
-	private static final String OPENCNAM_BASE_URL = "https://api.opencnam.com/v1/phone/";
+	private static final String OPENCNAM_BASE_URL = "https://api.opencnam.com/v2/phone/";
 	
 	/** Identifier for api_key parameter */
-	private static final String PARAM_API_KEY = "api_key";
+	private static final String PARAM_AUTH_TOKEN = "auth_token";
 	
 	/** Identifier for format parameter */
 	private static final String PARAM_FORMAT = "format";
 	
 	/** Identifier for username parameter */
-	private static final String PARAM_USERNAME = "username";
+	private static final String PARAM_ACCOUNT_SID = "account_sid";
 	
 	/** Format value for XML */
 	public static final String FORMAT_XML = "xml";
@@ -77,10 +77,10 @@ abstract public class OpenCNAMRequest implements Request {
 	private String mSerializationFormat = FORMAT_TEXT;
 	
 	/** Optional username parameter */
-	private String mUsername = null;
+	private String mAccountSid = null;
 	
 	/** Optional API key */
-	private String mAPIKey = null;
+	private String mAuthToken = null;
 	
 	/** Reusable HttpClient instance */
 	private HttpClient mHttpClient;
@@ -140,18 +140,18 @@ abstract public class OpenCNAMRequest implements Request {
 	}
 
 	/**
-	 * Set the optional username parameter 
+	 * Sets the account sid for professional account holders.
 	 */
-	public void setUsername(String username) {
-		mUsername = username;
+	public void setAccountSid(String username) {
+		mAccountSid = username;
 	}
 	
 	/** 
-	 * Set the API key.
+	 * Set the auth token for professional account holders.
 	 * @param apiKey
 	 */
-	public void setAPIKey(String apiKey) {
-		mAPIKey = apiKey;
+	public void setAuthToken(String apiKey) {
+		mAuthToken = apiKey;
 	}
 
 	/**
@@ -239,18 +239,18 @@ abstract public class OpenCNAMRequest implements Request {
 		builder.append("=");
 		builder.append(mSerializationFormat);
 		
-		if (mAPIKey != null) {
+		if (mAuthToken != null) {
 			builder.append("&");
-			builder.append(PARAM_API_KEY);
+			builder.append(PARAM_AUTH_TOKEN);
 			builder.append("=");
-			builder.append(mAPIKey);
+			builder.append(mAuthToken);
 		}
 		
-		if (mUsername != null) {
+		if (mAccountSid != null) {
 			builder.append("&");
-			builder.append(PARAM_USERNAME);
+			builder.append(PARAM_ACCOUNT_SID);
 			builder.append("=");
-			builder.append(mUsername);
+			builder.append(mAccountSid);
 		}
 
 		return URI.create(builder.toString());
